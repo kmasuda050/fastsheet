@@ -66,15 +66,12 @@ pub fn rstr(string: Value) -> String {
 //
 
 // Read the sheet
-unsafe fn read(this: Value, rb_file_name: Value) -> Value {
+unsafe fn read(this: Value, rb_file_name: Value, rb_sheet_name: Value) -> Value {
     let mut document =
         Sheets::open(rstr(rb_file_name))
         .expect("Cannot open file!");
 
-    // Open first worksheet by default
-    //
-    // TODO: allow use different worksheets
-    let sheet = document.worksheet_range_by_index(0).unwrap();
+    let sheet = document.worksheet_range(rstr(rb_sheet_name).as_str()).unwrap();
 
     let rows = rb_ary_new();
 
@@ -147,6 +144,6 @@ pub unsafe extern fn Init_libfastsheet() {
         cstr("read!").as_ptr(),
         // Rust function as pointer to C function
         read as *const c_void,
-        1 as c_int
+        2 as c_int
     );
 }

@@ -27,7 +27,7 @@ Open a sheet:
 ```ruby
 require 'fastsheet'
 
-sheet = Fastsheet::Sheet.new('path/to/sheet.xlsx')
+sheet = Fastsheet::Sheet.new('path/to/sheet.xlsx', 'Sheet1')
 
 # number of columns
 sheet.width
